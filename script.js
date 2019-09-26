@@ -52,7 +52,7 @@ class Field {
 	}
 
 	validate() {
-		const value = this.getValue;
+		const value = this.getValue();
 		const errorMsgs = [];
 		for (let validation of this.validations) {
 			if (!validation.validate(value)) {
@@ -106,7 +106,7 @@ const isANumber = new Validation(function() {
 	if (value < 0 || isNaN(value)) {
 		entry = false;
 	}
-});
+}, 'must be a number');
 const presenceValidation = new Validation((value) => !!value, 'must not be blank');
 const nowOrFutureValidation = new Validation(function(dateStrToTest) {
 	if (!dateStrToTest) {
@@ -127,12 +127,26 @@ const validateCardNumber = new Validation(function(number) {
 	return luhnCheck(number);
 }, 'must be a valid card number');
 
-let nameField = new Field(document.querySelector('name-field'), [ presenceValidation ]);
-let carInfoField = new Field(document.querySelector('car-info-field'), [ presenceValidation ]);
-let startDateField = new Field(document.querySelector('start-date-field'), [
+let nameField = new Field(document.querySelector('#name-field'), [ presenceValidation ]);
+let carInfoField = new Field(document.querySelector('#car-info-field'), [ presenceValidation ]);
+let startDateField = new Field(document.querySelector('#start-date-field'), [
 	presenceValidation,
 	nowOrFutureValidation
 ]);
-let daysField = new Field(document.querySelector('days-field'), [ presenceValidation, isNaN ]);
-let cvvField = new Field(document.querySelector('cvv-field'), [ presenceValidation, isNaN ]);
-let expirationField = new Field(document.querySelector('expiration-field'), [ presenceValidation, isNaN ]);
+let daysField = new Field(document.querySelector('#days-field'), [ presenceValidation, isNaN ]);
+let cvvField = new Field(document.querySelector('#cvv-field'), [ presenceValidation, isNaN ]);
+let expirationField = new Field(document.querySelector('#expiration-field'), [ presenceValidation, isNaN ]);
+let form = new Form(document.querySelector('#parking-form'), [
+	nameField,
+	carInfoField,
+	startDateField,
+	daysField,
+	cvvField,
+	expirationField
+]);
+
+document.querySelector('#parking-form').addEventListener('submit', (event) => {
+	event.preventDefault();
+	if (form.validate()) {
+	}
+});
