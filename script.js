@@ -101,6 +101,12 @@ function luhnCheck(val) {
 	return sum % 10 == 0;
 }
 
+const isANumber = new Validation(function() {
+	let entry = true;
+	if (value < 0 || isNaN(value)) {
+		entry = false;
+	}
+});
 const presenceValidation = new Validation((value) => !!value, 'must not be blank');
 const nowOrFutureValidation = new Validation(function(dateStrToTest) {
 	if (!dateStrToTest) {
@@ -119,4 +125,14 @@ const validateCardNumber = new Validation(function(number) {
 	if (!regex.test(number)) return false;
 
 	return luhnCheck(number);
-}, 'must be a valid');
+}, 'must be a valid card number');
+
+let nameField = new Field(document.querySelector('name-field'), [ presenceValidation ]);
+let carInfoField = new Field(document.querySelector('car-info-field'), [ presenceValidation ]);
+let startDateField = new Field(document.querySelector('start-date-field'), [
+	presenceValidation,
+	nowOrFutureValidation
+]);
+let daysField = new Field(document.querySelector('days-field'), [ presenceValidation, isNaN ]);
+let cvvField = new Field(document.querySelector('cvv-field'), [ presenceValidation, isNaN ]);
+let expirationField = new Field(document.querySelector('expiration-field'), [ presenceValidation, isNaN ]);
