@@ -16,20 +16,19 @@ class Field {
 	}
 
 	clearErrorMsgs() {
-		const fieldContainer = field.parentNode;
-		for (let msg of this.inputDiv.querySelector('.error-message')) {
+		for (let msg of this.inputDiv.querySelectorAll('.error-message')) {
 			msg.remove();
 		}
 	}
 
 	markValid() {
-		clearErrorMsgs(field);
+		this.clearErrorMsgs();
 		this.inputDiv.classList.remove('input-invalid');
 		this.inputDiv.classList.add('input-valid');
 	}
 
 	markInvalid() {
-		clearErrorMsgs(field);
+		this.clearErrorMsgs();
 		this.inputDiv.classList.remove('input-valid');
 		this.inputDiv.classList.add('input-invalid');
 	}
@@ -40,13 +39,13 @@ class Field {
 			const msgNode = document.createElement('p');
 			msgNode.classList.add('input-hint', 'text-danger', 'error-msg');
 			msgNode.innerText = `${fieldName} ${msg}`;
-			this.inputDiv.appendChilc(msgNode);
+			this.inputDiv.appendChild(msgNode);
 		}
 	}
 
 	//what to put in querySelector?
 	getValue() {
-		const input = this.inputDiv.querySelector('');
+		const input = this.inputDiv.querySelector('input');
 		const value = input.value;
 		return value;
 	}
@@ -148,5 +147,6 @@ let form = new Form(document.querySelector('#parking-form'), [
 document.querySelector('#parking-form').addEventListener('submit', (event) => {
 	event.preventDefault();
 	if (form.validate()) {
+		console.log('success');
 	}
 });
