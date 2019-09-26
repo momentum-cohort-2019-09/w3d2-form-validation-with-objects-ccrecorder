@@ -43,7 +43,6 @@ class Field {
 		}
 	}
 
-	//what to put in querySelector?
 	getValue() {
 		const input = this.inputDiv.querySelector('input');
 		const value = input.value;
@@ -132,9 +131,9 @@ let startDateField = new Field(document.querySelector('#start-date-field'), [
 	presenceValidation,
 	nowOrFutureValidation
 ]);
-let daysField = new Field(document.querySelector('#days-field'), [ presenceValidation, isNaN ]);
-let cvvField = new Field(document.querySelector('#cvv-field'), [ presenceValidation, isNaN ]);
-let expirationField = new Field(document.querySelector('#expiration-field'), [ presenceValidation, isNaN ]);
+let daysField = new Field(document.querySelector('#days-field'), [ presenceValidation, isANumber ]);
+let cvvField = new Field(document.querySelector('#cvv-field'), [ presenceValidation, isANumber ]);
+let expirationField = new Field(document.querySelector('#expiration-field'), [ presenceValidation, isANumber ]);
 let form = new Form(document.querySelector('#parking-form'), [
 	nameField,
 	carInfoField,
